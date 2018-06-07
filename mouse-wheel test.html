@@ -1,0 +1,67 @@
+<html>
+
+<header>
+
+</header>
+
+<body style="height: 50000px">
+	<div id="logs">
+
+	</div>
+</body>
+
+<script>
+	var count = 0;
+	var messages = [];
+	var logs = document.getElementById('logs');
+
+	window.addEventListener('mousewheel', mouseWheelHandler, true);
+
+	// window.addEventListener('resize', mouseWheelHandler, true);
+
+	function mouseWheelHandler(e) {
+		time(count, dowork);
+		// async();
+		count++;
+		// if (count < 3) {
+		// 	mouseWheelHandler();
+		// }
+	}
+
+	function dowork() {
+		var n = 24 + Math.floor(Math.random() * 1);
+		messages.length = 0;
+		var result = fib(n, 0);
+		console.log('do fib:', n, result);
+		// console.log(messages.join('\r\n'));
+	}
+
+	function async() {
+		setTimeout(() => {
+			time(count, dowork);
+		}, 0);
+	}
+
+	function time(key, action) {
+		var timeKey = '-------------------------time_' + key;
+
+		logs.innerText = timeKey + logs.innerText;
+
+		console.time(timeKey);
+		action();
+		console.timeEnd(timeKey);
+	}
+
+	function fib(n, deep) {
+		var message = new Array(deep * 4).join(' ') + 'call fib:' + n;
+		messages.push(message);
+
+		if (n < 3) {
+			return 1;
+		} else {
+			return fib(n - 1, deep + 1) + fib(n - 2, deep + 1);
+		}
+	}
+</script>
+
+</html>
